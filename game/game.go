@@ -4,15 +4,21 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 
+	"github.com/BrianCarducci/go-game/game/characters"
+	"github.com/BrianCarducci/go-game/game/handlers"
+
 	"log"
+
 )
 
 
 type Game struct{
-	Message string
+	State string
+	Player characters.Player
 }
 
 func (g *Game) Update() error {
+	handlers.HandleKeyInput(g)
 	return nil
 }
 
