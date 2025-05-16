@@ -6,7 +6,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/BrianCarducci/go-game/game"
-	"github.com/BrianCarducci/go-game/game/characters"
+	"github.com/BrianCarducci/go-game/setup"
 )
 
 var img *ebiten.Image
@@ -17,9 +17,11 @@ func main() {
 	ebiten.SetWindowSize(640, 480)
 	ebiten.SetWindowTitle("Hello, World!")
 
+	Player := setup.Setup()
+
 	game := game.Game{ 
 		State: "game", 
-		Player: characters.Player{ Img:ajdlkfjl  Xposition: 0, Yposition: 0 },
+		Player: Player,
 	}
 	
 	if err := ebiten.RunGame(&game); err != nil {

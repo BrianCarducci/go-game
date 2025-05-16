@@ -5,10 +5,7 @@ import (
 	"github.com/hajimehoshi/ebiten/v2/ebitenutil"
 
 	"github.com/BrianCarducci/go-game/game/characters"
-	"github.com/BrianCarducci/go-game/game/handlers"
-
-	"log"
-
+	"github.com/BrianCarducci/go-game/handlers"
 )
 
 
@@ -18,18 +15,18 @@ type Game struct{
 }
 
 func (g *Game) Update() error {
-	handlers.HandleKeyInput(g)
+	handlers.HandleKeyInput(&g.Player)
 	return nil
 }
 
 func (g *Game) Draw(screen *ebiten.Image) {
-
-	img, _, err := ebitenutil.NewImageFromFile("doggo.png")
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	screen.DrawImage(img, nil)
+	// Draw player
+	playerDrawOptions := &ebiten.DrawImageOptions{}
+	playerDrawOptions.GeoM.Translate(float64(g.Player.Xposition), float64(g.Player.Yposition))
+	screen.DrawImage(
+		g.Player.Img, 
+		playerDrawOptions,
+	)
 
 	ebitenutil.DebugPrint(screen, "Hello, World!")
 }
