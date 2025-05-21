@@ -2,29 +2,36 @@ package main
 
 import (
 	"log"
+	"embed"
 
 	"github.com/hajimehoshi/ebiten/v2"
 
 	"github.com/BrianCarducci/go-game/game"
 	"github.com/BrianCarducci/go-game/setup"
+	"github.com/BrianCarducci/go-game/state"
 )
 
-var img *ebiten.Image
+//go:embed assets/fonts
+var fontFiles embed.FS
 
-func init() {}
+var app game.Game
 
-func main() {
+
+func init() {
 	ebiten.SetWindowSize(640, 480)
 	ebiten.SetWindowTitle("Hello, World!")
 
-	Player := setup.Setup()
+	Player, defaultFontFace := setup.Setup(fontFiles)
 
-	game := game.Game{ 
-		State: "game", 
+	app = game.Game{ 
+		State: state.StatePlaying, 
 		Player: Player,
+		Font: defaultFontFace,
 	}
-	
-	if err := ebiten.RunGame(&game); err != nil {
+}
+
+func main() {
+	if err := ebiten.RunGame(&app); err != nil {
 		log.Fatal(err)
 	}
 }
